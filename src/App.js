@@ -6,45 +6,84 @@ import './App.css';
 import 'aframe';
 import 'aframe-particle-system-component';
 import {Entity, Scene} from 'aframe-react';
-import 'aframe-physics-system'
+// import 'aframe-physics-system'
 
-// // require aframe physics system
-// require('aframe-physics-system');
+// require aframe physics system
+require('aframe-physics-system');
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    // this.handleMouseMove = this.handleMouseMove.bind(this);
     this.state = {
       timer: 30,
+      scenex:0,
+      scenez: 0,
+      amount:0,
+      boxes:[]
      };
+     this.createBoxes= this.createBoxes.bind(this);
+    //  this.createBoxe= this.createBox.bind(this);
   }
 
 
   componentDidMount() {
     this.setState({
-      timer : 30
+      timer : 30,
+      scenex:200,
+      scenez: 400,
+      amount: 20
     })
-
-
   }
 
-  render () {
+  // createBox(){
+  //   function getRandomInt(max) {
+  //     return Math.floor(Math.random() * Math.floor(max));
+  //   }
 
+  //   let posx =getRandomInt(20);
+  //   let posz =getRandomInt(5);
+  //   let scale = getRandomInt(5)
+  //   console.log("create a box");
+  //   let newBox =<Entity geometry={{primitive: 'box'}} material={{color: 'green'}} scale={{x: scale, y: scale, z:scale}} position={{x: posx, y: 2, z: posz}}/> 
+  //  return  newBox 
+  // }
+
+
+  createBoxes(amount){
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * Math.floor(max));
+    }
+
+    let i;
+    for (i = 0; i < amount; i++) {
+      let posx =getRandomInt(20);
+      let posz =getRandomInt(5);
+      let scale = getRandomInt(5)
+      console.log("create a box");
+      let newBox =<Entity class={i} geometry={{primitive: 'box'}} material={{color: 'green'}} scale={{x: scale, y: scale, z:scale}} position={{x: posx, y: 2, z: posz}}/> 
+            
+    // console.log('for loop'+i+'and the amount it should loop'+this.state.amount)
+   return newBox
+  }}
+
+  handleCollide = () => {
+    alert('You found it!');
+  }
+
+  
+
+  render () {
+  
+    let boxes = this.createBoxes(this.state.amount);
     return (
     <Scene physics="debug: true">
-    <Entity camera look-controls geometry={{primitive: 'box'}} material={{color: 'red'}} position={{x: 0, y: 0, z: -5}}/>
-    <Entity particle-system={{preset: 'snow'}}/>
-    <Entity static-body geometry={{primitive: 'box'}} material={{color: 'red'}} position={{x: 20, y: 0, z: -5}}/>
-    <Entity static-body geometry={{primitive: 'box'}} material={{color: 'green'}}  scale={{x: 200, y: 0, z:400}} position={{x: 0, y: 0, z: 0}}/>
-    <Entity id = "box1"static-body geometry={{primitive: 'box'}} material={{color: 'black'}}  scale={{x: 2.4, y: 2.4, z: 5}} position={{x: 10, y: 0, z: 0}}/>
-    <Entity id = "box1"static-body geometry={{primitive: 'box'}} material={{color: 'red'}}  scale={{x: 1, y: 2, z: 5}} position={{x: 20, y: 0, z: 20}}/>
-    <Entity id = "box1"static-body geometry={{primitive: 'box'}} material={{color: 'green'}}  scale={{x: 5, y: 5, z: 5}} position={{x: 20, y: 0, z: 10}}/>
-    <Entity id = "box1"static-body geometry={{primitive: 'box'}} material={{color: 'blue'}}  scale={{x: 5, y: 5, z: 5}} position={{x: 16, y: 0, z: 5}}/>
-    <Entity id = "PINK" static-body geometry={{primitive: 'box'}} material={{color: 'pink'}}  scale={{x: 2, y: 2, z: 2}} position={{x: 25, y: 0, z: 9}}/>
+      <Entity primitive='a-sky' color='black'/>
+    <Entity camera look-controls/>
+    <Entity particle-system={{preset: 'snow', particleCount: 3000}}/>
 
-
-    <Entity text={{value: 'Find your way out of the maze!'}}/>
+    <Entity static-body geometry={{primitive: 'box'}} material={{color: 'red'}}  scale={{x: this.state.scenex, y: 0, z:this.state.scenez}} position={{x: 0, y: 0, z: 0}}/>
+    {boxes}
+    <Entity text={{value: 'Find the BlackBox'}}  scale={{x: 20, y: 20, z:20}} position={{x: 5, y:2, z: -5}}/>
     <h2>FIND THE PINK BOX</h2>
   </Scene>
 
