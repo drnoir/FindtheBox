@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import 'aframe';
 import 'aframe-particle-system-component';
 import {Entity, Scene} from 'aframe-react';
-// import 'aframe-physics-system'
+import 'aframe-physics-system'
 
 // require aframe physics system
 require('aframe-physics-system');
@@ -36,6 +36,11 @@ class  Box extends React.Component {
 
   render () {
 
+    let material = {
+      shader: 'flat',
+      src : 'fac.jpg'
+  };
+
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
       }
@@ -44,9 +49,9 @@ class  Box extends React.Component {
         return colors[Math.floor(Math.random() * colors.length)];
       }
 
-      let posx =getRandomInt(300);
-      let posz =getRandomInt(50);
-      let scale = getRandomInt(5);
+      let posx =getRandomInt(50);
+      let posz =getRandomInt(400);
+      let scale = getRandomInt(15);
       let colorArr = ['red', 'green', 'blue', 'brown'];
       let color = getRandomColor(colorArr);
       console.log("created a box");
@@ -54,7 +59,9 @@ class  Box extends React.Component {
     
       return (
 
-        <Entity geometry={{primitive: 'box'}} material={{color: color}} scale={{x: scale, y: scale, z:scale}} position={{x: posx, y: 2, z: posz}}/> 
+     
+        <Entity static-body  geometry={{primitive: 'box'}}  material={material} scale={{x: scale, y: scale, z:scale}} position={{x: posx, y: 2, z: posz}}/> 
+        
   );
 }
 }
