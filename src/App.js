@@ -6,6 +6,7 @@ import './App.css';
 import 'aframe';
 import 'aframe-particle-system-component';
 import {Entity, Scene} from 'aframe-react';
+import Box from './components/Box.js'
 // import 'aframe-physics-system'
 
 // require aframe physics system
@@ -18,11 +19,11 @@ class App extends React.Component {
       timer: 30,
       scenex:0,
       scenez: 0,
-      amount:0,
+      amount:20,
       boxes:[]
      };
     //  this.createBoxes= this.createBoxes.bind(this);
-     this.createBox= this.createBox.bind(this);
+    //  this.createBox= this.createBox.bind(this);
   }
 
 
@@ -35,19 +36,13 @@ class App extends React.Component {
     })
   }
 
-  createBox(){
-    function getRandomInt(max) {
-      return Math.floor(Math.random() * Math.floor(max));
-    }
-
-    let posx =getRandomInt(20);
-    let posz =getRandomInt(5);
-    let scale = getRandomInt(5)
-    console.log("create a box");
-    let newBox =<Entity geometry={{primitive: 'box'}} material={{color: 'green'}} scale={{x: scale, y: scale, z:scale}} position={{x: posx, y: 2, z: posz}}/> 
-
-    return newBox
-  }
+  // createBoxes(amount){
+  // console.log("create"+amount+"boxes");
+  // var i;
+  //   for (i = 0; i < amount; i++) {
+  //     return <Box/>
+  //   }
+  // }
 
   handleCollide = () => {
     alert('You found it!');
@@ -57,19 +52,21 @@ class App extends React.Component {
 
   render () {
   
-    let box = this.createBox();
+    // let boxes = this.createBoxes(10);
   
+
     return (
     <Scene physics="debug: true">
       <Entity primitive='a-sky' color='black'/>
-    <Entity camera look-controls/>
+    <Entity camera look-controls wasd-controls="acceleration: 200"/>
     <Entity particle-system={{preset: 'snow', particleCount: 3000}}/>
-
-    <Entity static-body geometry={{primitive: 'box'}} material={{color: 'red'}}  scale={{x: this.state.scenex, y: 0, z:this.state.scenez}} position={{x: 0, y: 0, z: 0}}/>
-    {box}{box}{box}
-
+      <Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/>
+      <Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/>
+      <Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/>
+      <Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/><Box/>
+    <Entity static-body geometry={{primitive: 'box'}} material={{color: 'white'}}  scale={{x: this.state.scenex, y: 0, z:this.state.scenez}} position={{x: 0, y: 0, z: 0}}/>
     <Entity text={{value: 'Find the BlackBox'}}  scale={{x: 20, y: 20, z:20}} position={{x: 5, y:2, z: -5}}/>
-    <h2>FIND THE PINK BOX</h2>
+ 
   </Scene>
 
   );
